@@ -3,250 +3,169 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>EndlessNet Console</title>
-    <link rel="stylesheet" href="app.css" />
+    <title>EndlessNet - частные сети для команд и инфраструктуры</title>
+    <meta
+      name="description"
+      content="EndlessNet - прототип control plane для частных WireGuard-style сетей, админки, CLI и MCP автоматизации."
+    />
+    <link rel="stylesheet" href="site.css" />
+    <script src="config.js"></script>
+    <script src="site.js" defer></script>
   </head>
-  <body>
-    <svg class="sprite" aria-hidden="true">
-      <symbol id="icon-grid" viewBox="0 0 24 24">
-        <path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" />
-      </symbol>
-      <symbol id="icon-network" viewBox="0 0 24 24">
-        <path d="M12 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM5 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM19 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM10.3 10.1l-3.6 5.2M13.7 10.1l3.6 5.2M8 18h8" />
-      </symbol>
-      <symbol id="icon-server" viewBox="0 0 24 24">
-        <rect x="4" y="4" width="16" height="6" rx="1.5" />
-        <rect x="4" y="14" width="16" height="6" rx="1.5" />
-        <path d="M8 7h.01M8 17h.01M12 7h4M12 17h4" />
-      </symbol>
-      <symbol id="icon-key" viewBox="0 0 24 24">
-        <circle cx="8" cy="15" r="4" />
-        <path d="M11 12 20 3M17 6l3 3M14 9l2 2" />
-      </symbol>
-      <symbol id="icon-plus" viewBox="0 0 24 24">
-        <path d="M12 5v14M5 12h14" />
-      </symbol>
-      <symbol id="icon-refresh" viewBox="0 0 24 24">
-        <path d="M20 12a8 8 0 0 1-13.7 5.7M4 12A8 8 0 0 1 17.7 6.3M17 3v4h-4M7 21v-4h4" />
-      </symbol>
-      <symbol id="icon-copy" viewBox="0 0 24 24">
-        <rect x="8" y="8" width="11" height="11" rx="2" />
-        <path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1" />
-      </symbol>
-      <symbol id="icon-log-out" viewBox="0 0 24 24">
-        <path d="M10 17l5-5-5-5M15 12H3M21 5v14" />
-      </symbol>
-    </svg>
+  <body data-page="home">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="EndlessNet">
+        <span class="brand-mark">EN</span>
+        <span>EndlessNet</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="site-nav" id="siteNav" aria-label="Основная навигация">
+        <a href="#product">Продукт</a>
+        <a href="#scenarios">Сценарии</a>
+        <a href="#platform">Платформа</a>
+        <a href="docs/">Документация</a>
+        <a class="nav-action" href="/admin/" data-admin-link>Админка</a>
+      </nav>
+    </header>
 
-    <div class="app">
-      <aside class="sidebar">
-        <div class="brand">
-          <div class="brand-mark">EN</div>
-          <div>
-            <strong>EndlessNet</strong>
-            <span>Control Plane</span>
+    <main>
+      <section class="hero" aria-label="Маркетинговый сайт EndlessNet">
+        <canvas id="networkCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Маркетинговый сайт</p>
+          <h1>EndlessNet</h1>
+          <p class="hero-copy">
+            Частная сетка для команд, узлов и автоматизации: Go control plane, WireGuard-style
+            конфиги, OIDC вход через российский центр авторизации и MCP-интерфейс для операторов.
+          </p>
+          <div class="hero-actions" aria-label="Основные действия">
+            <a class="button primary" href="/admin/" data-admin-link>Открыть админку</a>
+            <a class="button secondary" href="docs/">Читать документацию</a>
           </div>
         </div>
-        <nav class="nav" aria-label="Разделы">
-          <button class="nav-item active" data-view="overview" type="button">
-            <svg><use href="#icon-grid"></use></svg><span>Обзор</span>
-          </button>
-          <button class="nav-item" data-view="networks" type="button">
-            <svg><use href="#icon-network"></use></svg><span>Сети</span>
-          </button>
-          <button class="nav-item" data-view="nodes" type="button">
-            <svg><use href="#icon-server"></use></svg><span>Узлы</span>
-          </button>
-          <button class="nav-item" data-view="access" type="button">
-            <svg><use href="#icon-key"></use></svg><span>Доступ</span>
-          </button>
-        </nav>
-        <div class="sidebar-footer">
-          <span class="dot" id="statusDot"></span>
-          <span id="statusText">Нет сессии</span>
+      </section>
+
+      <section class="signal-band" id="product">
+        <div class="section-inner split-layout">
+          <div>
+            <p class="eyebrow">Не только console UI</p>
+            <h2>Два фронтенда с разными задачами</h2>
+            <p>
+              Публичный сайт объясняет продукт, сценарии внедрения и быстрый старт. Админка
+              остается рабочим интерфейсом для сетей, узлов, токенов и команд установки.
+            </p>
+          </div>
+          <div class="frontend-grid" aria-label="Разделение фронтендов">
+            <article class="frontend-card">
+              <span>01</span>
+              <h3>Публичный сайт</h3>
+              <p>Лендинг, продуктовые блоки, документация и команды установки для GitHub Pages.</p>
+            </article>
+            <article class="frontend-card">
+              <span>02</span>
+              <h3>Админка</h3>
+              <p>Защищенная консоль на `/admin/` для control plane и операционных действий.</p>
+            </article>
+          </div>
         </div>
-      </aside>
+      </section>
 
-      <main class="main">
-        <header class="topbar">
+      <section class="section" id="scenarios">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="eyebrow">Сценарии</p>
+            <h2>Где EndlessNet полезен</h2>
+          </div>
+          <div class="scenario-grid">
+            <article class="scenario">
+              <h3>Частные сети для команд</h3>
+              <p>Создание сетей, назначение CIDR, DNS и регистрация рабочих машин через CLI.</p>
+            </article>
+            <article class="scenario">
+              <h3>Доступ к инфраструктуре</h3>
+              <p>OIDC-сессии, пользовательские узлы и конфиги WireGuard без ручной раздачи ключей.</p>
+            </article>
+            <article class="scenario">
+              <h3>Автоматизация через MCP</h3>
+              <p>Операции со списками сетей и узлов доступны агентам через stdio MCP server.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" id="platform">
+        <div class="section-inner platform-layout">
+          <div class="product-preview" aria-label="Схема платформы EndlessNet">
+            <div class="preview-topbar">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="preview-body">
+              <div class="preview-sidebar">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="preview-map">
+                <div class="hub">Control Plane</div>
+                <div class="node node-a">CLI</div>
+                <div class="node node-b">MCP</div>
+                <div class="node node-c">OIDC</div>
+                <div class="node node-d">WG</div>
+              </div>
+            </div>
+          </div>
+          <div class="platform-copy">
+            <p class="eyebrow">Платформа</p>
+            <h2>Минимальный стек, понятная ответственность</h2>
+            <ul class="feature-list">
+              <li><strong>Go server</strong><span>API, сессии, OIDC callback и embedded admin UI.</span></li>
+              <li><strong>CLI client</strong><span>Логин, регистрация узла и запись WireGuard-конфига.</span></li>
+              <li><strong>MCP server</strong><span>Автоматизация сетевых операций через stdio tools.</span></li>
+              <li><strong>Static public</strong><span>Лендинг и документация для Pages или встроенной раздачи.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section docs-callout" id="quickstart">
+        <div class="section-inner docs-layout">
           <div>
-            <h1 id="viewTitle">Обзор</h1>
-            <p id="viewSubtitle">Состояние сетей, узлов и клиентов</p>
+            <p class="eyebrow">Быстрый старт</p>
+            <h2>Установить клиент</h2>
+            <p>
+              Команда ниже использует публичный install.sh и текущий backend API. Для production
+              дополнительно настройте OIDC issuer, client credentials и CORS origin.
+            </p>
           </div>
-          <div class="top-actions">
-            <button class="icon-button" id="refreshButton" type="button" title="Обновить">
-              <svg><use href="#icon-refresh"></use></svg>
-            </button>
-            <div class="session">
-              <span id="userName">Гость</span>
-              <button class="icon-button" id="logoutButton" type="button" title="Выйти">
-                <svg><use href="#icon-log-out"></use></svg>
-              </button>
+          <div class="command-panel">
+            <div class="command-header">
+              <span>install.sh</span>
+              <button class="copy-button" type="button" data-copy-target="installCommand">Копировать</button>
             </div>
+            <pre id="installCommand" data-install-command></pre>
           </div>
-        </header>
+        </div>
+      </section>
+    </main>
 
-        <section class="auth-panel" id="authPanel">
-          <div>
-            <h2>Вход</h2>
-            <label for="apiBaseInput">Backend API</label>
-            <div class="inline-form">
-              <input id="apiBaseInput" type="url" autocomplete="off" placeholder="http://localhost:8080" />
-              <button id="saveApiBaseButton" class="button ghost" type="button">API</button>
-            </div>
-            <label for="tokenInput">Токен сессии</label>
-            <div class="inline-form">
-              <input id="tokenInput" type="password" autocomplete="off" placeholder="Bearer token" />
-              <button id="saveTokenButton" class="button primary" type="button">
-                <svg><use href="#icon-key"></use></svg><span>Сохранить</span>
-              </button>
-            </div>
-          </div>
-          <div class="auth-actions">
-            <a class="button primary" id="loginLink" href="#">
-              <svg><use href="#icon-key"></use></svg><span>Центр авторизации</span>
-            </a>
-            <button id="devTokenButton" class="button ghost" type="button">Dev token</button>
-          </div>
-        </section>
-
-        <section class="alert hidden" id="alertBox"></section>
-
-        <section class="view active" id="overviewView">
-          <div class="metrics">
-            <div class="metric">
-              <span>Сети</span>
-              <strong id="metricNetworks">0</strong>
-            </div>
-            <div class="metric">
-              <span>Узлы</span>
-              <strong id="metricNodes">0</strong>
-            </div>
-            <div class="metric">
-              <span>Peers</span>
-              <strong id="metricPeers">0</strong>
-            </div>
-            <div class="metric">
-              <span>Сессия</span>
-              <strong id="metricSession">offline</strong>
-            </div>
-          </div>
-
-          <div class="workspace-grid">
-            <section class="panel topology-panel">
-              <div class="panel-header">
-                <h2>Топология</h2>
-                <select id="topologyNetworkSelect" aria-label="Сеть для топологии"></select>
-              </div>
-              <div class="topology" id="topology"></div>
-            </section>
-
-            <section class="panel">
-              <div class="panel-header">
-                <h2>Новая сеть</h2>
-              </div>
-              <form id="createNetworkForm" class="form">
-                <label>
-                  Название
-                  <input name="name" required placeholder="office" />
-                </label>
-                <label>
-                  CIDR
-                  <input name="cidr" required value="100.64.0.0/24" />
-                </label>
-                <label>
-                  DNS
-                  <input name="dns" placeholder="100.64.0.1, 1.1.1.1" />
-                </label>
-                <button class="button primary" type="submit">
-                  <svg><use href="#icon-plus"></use></svg><span>Создать</span>
-                </button>
-              </form>
-            </section>
-          </div>
-        </section>
-
-        <section class="view" id="networksView">
-          <section class="panel">
-            <div class="panel-header">
-              <h2>Сети</h2>
-              <button class="button ghost" id="reloadNetworksButton" type="button">
-                <svg><use href="#icon-refresh"></use></svg><span>Обновить</span>
-              </button>
-            </div>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Название</th>
-                    <th>CIDR</th>
-                    <th>DNS</th>
-                    <th>ID</th>
-                  </tr>
-                </thead>
-                <tbody id="networksTable"></tbody>
-              </table>
-            </div>
-          </section>
-        </section>
-
-        <section class="view" id="nodesView">
-          <section class="panel">
-            <div class="panel-header">
-              <h2>Узлы</h2>
-              <select id="nodesNetworkSelect" aria-label="Сеть для списка узлов"></select>
-            </div>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Hostname</th>
-                    <th>IP</th>
-                    <th>Endpoint</th>
-                    <th>Tags</th>
-                    <th>ID</th>
-                  </tr>
-                </thead>
-                <tbody id="nodesTable"></tbody>
-              </table>
-            </div>
-          </section>
-        </section>
-
-        <section class="view" id="accessView">
-          <div class="workspace-grid">
-            <section class="panel">
-              <div class="panel-header">
-                <h2>Установка</h2>
-                <button class="icon-button" id="copyInstallCommand" type="button" title="Скопировать установку">
-                  <svg><use href="#icon-copy"></use></svg>
-                </button>
-              </div>
-              <pre id="installCommand"></pre>
-            </section>
-            <section class="panel">
-              <div class="panel-header">
-                <h2>Клиент</h2>
-                <button class="icon-button" id="copyClientCommand" type="button" title="Скопировать команду">
-                  <svg><use href="#icon-copy"></use></svg>
-                </button>
-              </div>
-              <pre id="clientCommand"></pre>
-            </section>
-            <section class="panel">
-              <div class="panel-header">
-                <h2>MCP</h2>
-                <button class="icon-button" id="copyMCPCommand" type="button" title="Скопировать команды">
-                  <svg><use href="#icon-copy"></use></svg>
-                </button>
-              </div>
-              <pre id="mcpCommand"></pre>
-            </section>
-          </div>
-        </section>
-      </main>
-    </div>
-
-    <script src="app.js" defer></script>
+    <footer class="site-footer">
+      <div>
+        <strong>EndlessNet</strong>
+        <span>Control-plane prototype for private networks.</span>
+      </div>
+      <nav aria-label="Ссылки в подвале">
+        <a href="docs/">Документация</a>
+        <a href="/admin/" data-admin-link>Админка</a>
+        <a href="#product">Фронтенды</a>
+      </nav>
+    </footer>
   </body>
 </html>

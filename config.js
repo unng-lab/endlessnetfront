@@ -1,0 +1,1 @@
+window.ENDLESSNET_API_BASE = window.ENDLESSNET_API_BASE || "";

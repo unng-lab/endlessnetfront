@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Документация EndlessNet</title>
+    <meta
+      name="description"
+      content="Документация EndlessNet: запуск сервера, вход, CLI, MCP, GitHub Pages и production OIDC."
+    />
+    <link rel="stylesheet" href="../site.css" />
+    <script>
+      window.ENDLESSNET_SITE_ROOT = "../";
+    </script>
+    <script src="../config.js"></script>
+    <script src="../site.js" defer></script>
+  </head>
+  <body data-page="docs">
+    <header class="site-header">
+      <a class="brand" href="../" aria-label="EndlessNet">
+        <span class="brand-mark">EN</span>
+        <span>EndlessNet</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="site-nav" id="siteNav" aria-label="Основная навигация">
+        <a href="../#product">Продукт</a>
+        <a href="../#scenarios">Сценарии</a>
+        <a href="../#platform">Платформа</a>
+        <a href="./" aria-current="page">Документация</a>
+        <a class="nav-action" href="/admin/" data-admin-link>Админка</a>
+      </nav>
+    </header>
+
+    <main class="docs-page">
+      <aside class="docs-nav" aria-label="Оглавление">
+        <a href="#overview">Обзор</a>
+        <a href="#server">Сервер</a>
+        <a href="#client">Клиент</a>
+        <a href="#mcp">MCP</a>
+        <a href="#pages">Pages</a>
+        <a href="#security">Безопасность</a>
+      </aside>
+
+      <article class="docs-content">
+        <header class="docs-header">
+          <p class="eyebrow">Документация</p>
+          <h1>EndlessNet: запуск и эксплуатация</h1>
+          <p>
+            Эта страница фиксирует текущий публичный quick start. Админка живет отдельно на
+            `/admin/`, а публичный сайт и документация могут публиковаться на GitHub Pages.
+          </p>
+        </header>
+
+        <section id="overview" class="doc-section">
+          <h2>Обзор</h2>
+          <p>
+            EndlessNet - Go-прототип control plane для приватных WireGuard-style сетей. Сервер
+            хранит сети, узлы, пользователей и сессии; клиент генерирует ключи и регистрирует
+            машину; MCP server открывает выбранные API-действия для автоматизации.
+          </p>
+          <div class="doc-grid">
+            <div>
+              <strong>Публичный frontend</strong>
+              <span>Лендинг, документация, install.sh и Pages build.</span>
+            </div>
+            <div>
+              <strong>Admin frontend</strong>
+              <span>Операционная консоль на `/admin/` с авторизацией через bearer token.</span>
+            </div>
+          </div>
+        </section>
+
+        <section id="server" class="doc-section">
+          <h2>Сервер</h2>
+          <p>Скопируйте пример конфига, настройте OIDC и запустите coordination API.</p>
+          <pre><code>Copy-Item configs\server.example.json server.json
+go run ./cmd/endlessnet-server --config server.json</code></pre>
+          <p>После запуска доступны:</p>
+          <ul>
+            <li>`/` - публичный сайт;</li>
+            <li>`/docs/` - документация;</li>
+            <li>`/admin/` - админка control plane;</li>
+            <li>`/api/v1/*` - JSON API для CLI, админки и MCP.</li>
+          </ul>
+        </section>
+
+        <section id="client" class="doc-section">
+          <h2>Клиент</h2>
+          <p>Для локальной разработки можно включить `auth.insecure_dev_bypass` и получить dev token.</p>
+          <pre><code>go run ./cmd/endlessnet-client login --server http://localhost:8080 --dev
+go run ./cmd/endlessnet-client network create --name office --cidr 100.64.0.0/24 --dns 100.64.0.1
+go run ./cmd/endlessnet-client up --network office --hostname my-laptop --output .\wg-endlessnet.conf</code></pre>
+          <div class="command-panel compact">
+            <div class="command-header">
+              <span>Install command</span>
+              <button class="copy-button" type="button" data-copy-target="installCommand">Копировать</button>
+            </div>
+            <pre id="installCommand" data-install-command></pre>
+          </div>
+        </section>
+
+        <section id="mcp" class="doc-section">
+          <h2>MCP</h2>
+          <p>Запускайте MCP server с тем же URL и session token, который используется клиентом.</p>
+          <pre><code>$env:ENDLESSNET_SERVER_URL = "http://localhost:8080"
+$env:ENDLESSNET_TOKEN = "&lt;token&gt;"
+go run ./cmd/endlessnet-mcp</code></pre>
+          <p>Доступные инструменты: `endlessnet_networks_list`, `endlessnet_network_create`, `endlessnet_nodes_list`.</p>
+        </section>
+
+        <section id="pages" class="doc-section">
+          <h2>GitHub Pages</h2>
+          <p>Pages build теперь публикует публичный frontend, а не админку.</p>
+          <pre><code>.\scripts\publish-pages.ps1 `
+  -RepoUrl https://github.com/&lt;owner&gt;/&lt;pages-repo&gt;.git `
+  -Path pages `
+  -Branch main `
+  -ApiBaseUrl https://api.example.ru</code></pre>
+          <p>Для Pages добавьте origin публичного сайта в `cors_allowed_origins` backend-конфига.</p>
+        </section>
+
+        <section id="security" class="doc-section">
+          <h2>Безопасность</h2>
+          <ul>
+            <li>`auth.insecure_dev_bypass` предназначен только для локальной разработки.</li>
+            <li>Не логируйте session tokens, OIDC tokens, client secrets и WireGuard private keys.</li>
+            <li>Production authorization должен идти через российский OIDC-compatible authorization center.</li>
+          </ul>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>EndlessNet</strong>
+        <span>Документация и публичный frontend.</span>
+      </div>
+      <nav aria-label="Ссылки в подвале">
+        <a href="../">Главная</a>
+        <a href="/admin/" data-admin-link>Админка</a>
+      </nav>
+    </footer>
+  </body>
+</html>
