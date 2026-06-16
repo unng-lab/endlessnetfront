@@ -6,6 +6,8 @@ install_dir="${ENDLESSNET_INSTALL_DIR:-/usr/local/bin}"
 server_url="${ENDLESSNET_SERVER_URL:-}"
 auth_token="${ENDLESSNET_AUTH_TOKEN:-}"
 network="${ENDLESSNET_NETWORK:-}"
+endpoint="${ENDLESSNET_ENDPOINT:-}"
+listen_port="${ENDLESSNET_LISTEN_PORT:-}"
 release_base="${ENDLESSNET_RELEASE_BASE_URL:-}"
 download_url="${ENDLESSNET_DOWNLOAD_URL:-}"
 go_package="${ENDLESSNET_GO_PACKAGE:-}"
@@ -64,7 +66,7 @@ if [ -n "$download_url" ]; then
       tar -xzf "$archive" -C "$tmp"
       found="$(find "$tmp" -type f -name "$name" | head -n 1)"
       [ -n "$found" ] || { echo "$name not found in archive" >&2; exit 1; }
-      cp "$found" "$bin"
+      [ "$found" = "$bin" ] || cp "$found" "$bin"
       ;;
     *)
       cp "$archive" "$bin"
@@ -76,7 +78,7 @@ elif [ -n "$release_base" ]; then
   tar -xzf "$archive" -C "$tmp"
   found="$(find "$tmp" -type f -name "$name" | head -n 1)"
   [ -n "$found" ] || { echo "$name not found in release archive" >&2; exit 1; }
-  cp "$found" "$bin"
+  [ "$found" = "$bin" ] || cp "$found" "$bin"
 elif [ -n "$go_package" ]; then
   command -v go >/dev/null 2>&1 || { echo "go is required for ENDLESSNET_GO_PACKAGE installs" >&2; exit 1; }
   GOBIN="$tmp" go install "$go_package"
@@ -101,7 +103,7 @@ EndlessNet client installed:
 
 Next:
   $name login --server "${server_url:-<server-url>}" --token "${auth_token:-<token>}"
-  $name up --network "${network:-<network>}" --hostname "\$(hostname)" --output ./wg-endlessnet.conf
+  $name up --network "${network:-<network>}" --hostname "\$(hostname)"${endpoint:+ --endpoint "$endpoint"}${listen_port:+ --listen-port "$listen_port"} --output ./wg-endlessnet.conf
 EOF
 
 if [ "${ENDLESSNET_AUTO_LOGIN:-0}" = "1" ] && [ -n "$server_url" ] && [ -n "$auth_token" ]; then
@@ -109,5 +111,13 @@ if [ "${ENDLESSNET_AUTO_LOGIN:-0}" = "1" ] && [ -n "$server_url" ] && [ -n "$aut
 fi
 
 if [ "${ENDLESSNET_AUTO_UP:-0}" = "1" ] && [ -n "$network" ]; then
-  "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --output ./wg-endlessnet.conf
+  if [ -n "$endpoint" ] && [ -n "$listen_port" ]; then
+    "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --endpoint "$endpoint" --listen-port "$listen_port" --output ./wg-endlessnet.conf
+  elif [ -n "$endpoint" ]; then
+    "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --endpoint "$endpoint" --output ./wg-endlessnet.conf
+  elif [ -n "$listen_port" ]; then
+    "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --listen-port "$listen_port" --output ./wg-endlessnet.conf
+  else
+    "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --output ./wg-endlessnet.conf
+  fi
 fi
