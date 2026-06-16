@@ -8,6 +8,7 @@ auth_token="${ENDLESSNET_AUTH_TOKEN:-}"
 network="${ENDLESSNET_NETWORK:-}"
 endpoint="${ENDLESSNET_ENDPOINT:-}"
 listen_port="${ENDLESSNET_LISTEN_PORT:-}"
+hostname_value="${ENDLESSNET_HOSTNAME:-$(hostname)}"
 release_base="${ENDLESSNET_RELEASE_BASE_URL:-}"
 download_url="${ENDLESSNET_DOWNLOAD_URL:-}"
 go_package="${ENDLESSNET_GO_PACKAGE:-}"
@@ -103,7 +104,7 @@ EndlessNet client installed:
 
 Next:
   $name login --server "${server_url:-<server-url>}" --token "${auth_token:-<token>}"
-  $name up --network "${network:-<network>}" --hostname "\$(hostname)"${endpoint:+ --endpoint "$endpoint"}${listen_port:+ --listen-port "$listen_port"} --output ./wg-endlessnet.conf
+  $name up --network "${network:-<network>}" --hostname "$hostname_value"${endpoint:+ --endpoint "$endpoint"}${listen_port:+ --listen-port "$listen_port"} --output ./wg-endlessnet.conf
 EOF
 
 if [ "${ENDLESSNET_AUTO_LOGIN:-0}" = "1" ] && [ -n "$server_url" ] && [ -n "$auth_token" ]; then
@@ -112,12 +113,12 @@ fi
 
 if [ "${ENDLESSNET_AUTO_UP:-0}" = "1" ] && [ -n "$network" ]; then
   if [ -n "$endpoint" ] && [ -n "$listen_port" ]; then
-    "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --endpoint "$endpoint" --listen-port "$listen_port" --output ./wg-endlessnet.conf
+    "$install_dir/$name" up --network "$network" --hostname "$hostname_value" --endpoint "$endpoint" --listen-port "$listen_port" --output ./wg-endlessnet.conf
   elif [ -n "$endpoint" ]; then
-    "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --endpoint "$endpoint" --output ./wg-endlessnet.conf
+    "$install_dir/$name" up --network "$network" --hostname "$hostname_value" --endpoint "$endpoint" --output ./wg-endlessnet.conf
   elif [ -n "$listen_port" ]; then
-    "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --listen-port "$listen_port" --output ./wg-endlessnet.conf
+    "$install_dir/$name" up --network "$network" --hostname "$hostname_value" --listen-port "$listen_port" --output ./wg-endlessnet.conf
   else
-    "$install_dir/$name" up --network "$network" --hostname "$(hostname)" --output ./wg-endlessnet.conf
+    "$install_dir/$name" up --network "$network" --hostname "$hostname_value" --output ./wg-endlessnet.conf
   fi
 fi
