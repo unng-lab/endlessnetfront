@@ -14,9 +14,16 @@
   const installURL = new URL("install.sh", siteRoot).href;
   const adminURL = new URL(window.ENDLESSNET_ADMIN_URL || "admin/", siteRoot).href;
   const installCommand = [
-    `curl -fsSL ${installURL} | ENDLESSNET_SERVER_URL="${apiBase}" ENDLESSNET_AUTH_TOKEN="<token>" ENDLESSNET_NETWORK="<network>" sh`,
+    "sudo install -d -m 0755 /etc/apt/keyrings",
+    "curl -fsSL https://apt.unng.ru/apt/unng.gpg | sudo tee /etc/apt/keyrings/unng.gpg >/dev/null",
+    'echo "deb [signed-by=/etc/apt/keyrings/unng.gpg] https://apt.unng.ru/apt stable main" | sudo tee /etc/apt/sources.list.d/unng.list',
+    "sudo apt update",
+    "sudo apt install endlessnet-client",
+    `endlessnet-client login --server "${apiBase}" --token "<token>"`,
+    'endlessnet-client up --network "<network>" --hostname "$(hostname)" --output ./wg-endlessnet.conf',
     "",
-    "# Until release binaries are published, provide one source:",
+    "# Alternative without APT:",
+    `curl -fsSL ${installURL} | ENDLESSNET_SERVER_URL="${apiBase}" ENDLESSNET_AUTH_TOKEN="<token>" ENDLESSNET_NETWORK="<network>" sh`,
     "# ENDLESSNET_RELEASE_BASE_URL=https://github.com/<owner>/<repo>/releases/latest/download",
     "# ENDLESSNET_GO_PACKAGE=github.com/<owner>/<repo>/cmd/endlessnet-client@latest",
   ].join("\n");

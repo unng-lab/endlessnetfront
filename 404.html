@@ -145,13 +145,13 @@
             <p class="eyebrow">Быстрый старт</p>
             <h2>Установить клиент</h2>
             <p>
-              Команда ниже использует публичный install.sh и текущий backend API. Для production
-              дополнительно настройте OIDC issuer, client credentials и CORS origin.
+              Команда ниже подключает UNNG APT-репозиторий, ставит `endlessnet-client`
+              и настраивает клиент для текущего backend API. `install.sh` оставлен как fallback.
             </p>
           </div>
           <div class="command-panel">
             <div class="command-header">
-              <span>install.sh</span>
+              <span>APT + client setup</span>
               <button class="copy-button" type="button" data-copy-target="installCommand">Копировать</button>
             </div>
             <pre id="installCommand" data-install-command></pre>
