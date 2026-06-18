@@ -13,7 +13,6 @@
   const siteRoot = new URL(window.ENDLESSNET_SITE_ROOT || "./", window.location.href);
   const installURL = new URL("install.sh", siteRoot).href;
   const adminURL = new URL("/admin/", apiBase).href;
-  const loginURL = new URL("/auth/login", apiBase).href;
   const installCommand = [
     `curl -fsSL ${installURL} | ENDLESSNET_SERVER_URL="${apiBase}" ENDLESSNET_AUTH_TOKEN="<token>" ENDLESSNET_NETWORK="<network>" sh`,
     "",
@@ -28,10 +27,6 @@
 
   document.querySelectorAll("[data-admin-link]").forEach((element) => {
     element.setAttribute("href", adminURL);
-  });
-
-  document.querySelectorAll("[data-login-link]").forEach((element) => {
-    element.setAttribute("href", loginURL);
   });
 
   document.querySelectorAll("[data-copy-target]").forEach((button) => {

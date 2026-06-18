@@ -35,8 +35,7 @@
         <a href="../#scenarios">Сценарии</a>
         <a href="../#platform">Платформа</a>
         <a href="./" aria-current="page">Документация</a>
-        <a href="/admin/" data-admin-link>Админка</a>
-        <a class="nav-action" href="/auth/login" data-login-link>&#1042;&#1086;&#1081;&#1090;&#1080; &#1095;&#1077;&#1088;&#1077;&#1079; VK ID</a>
+        <a class="nav-action" href="/admin/" data-admin-link>Админка</a>
       </nav>
     </header>
 
@@ -74,21 +73,22 @@
             </div>
             <div>
               <strong>Admin frontend</strong>
-              <span>Операционная консоль на `/admin/` с авторизацией через bearer token.</span>
+              <span>Операционная консоль на `/admin/` с server-side session cookie и выбором OAuth-провайдера.</span>
             </div>
           </div>
         </section>
 
         <section id="server" class="doc-section">
           <h2>Сервер</h2>
-          <p>Скопируйте пример конфига, настройте OIDC и запустите coordination API.</p>
+          <p>Скопируйте пример конфига, настройте `auth.providers[]` и запустите coordination API.</p>
           <pre><code>Copy-Item configs\server.example.json server.json
 go run ./cmd/endlessnet-server --config server.json</code></pre>
           <p>После запуска доступны:</p>
           <ul>
             <li>`/` - публичный сайт;</li>
             <li>`/docs/` - документация;</li>
-            <li>`/admin/` - админка control plane;</li>
+            <li>`/admin/` - закрытая админка control plane;</li>
+            <li>`/auth/login` - страница выбора OAuth/OIDC-провайдера;</li>
             <li>`/api/v1/*` - JSON API для CLI, админки и MCP.</li>
           </ul>
         </section>
@@ -133,7 +133,7 @@ go run ./cmd/endlessnet-mcp</code></pre>
           <ul>
             <li>`auth.insecure_dev_bypass` предназначен только для локальной разработки.</li>
             <li>Не логируйте session tokens, OIDC tokens, client secrets и WireGuard private keys.</li>
-            <li>Production authorization должен идти через российский OIDC-compatible authorization center.</li>
+            <li>Production authorization должен идти через `auth.providers[]` и российские OIDC/OAuth2-compatible authorization centers.</li>
           </ul>
         </section>
       </article>
@@ -146,7 +146,6 @@ go run ./cmd/endlessnet-mcp</code></pre>
       </div>
       <nav aria-label="Ссылки в подвале">
         <a href="../">Главная</a>
-        <a href="/auth/login" data-login-link>VK ID</a>
         <a href="/admin/" data-admin-link>Админка</a>
       </nav>
     </footer>
