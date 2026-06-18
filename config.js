@@ -1,1 +1,1 @@
-window.ENDLESSNET_API_BASE = "http://185.193.137.190:7070";
+window.ENDLESSNET_API_BASE = "http://api.endlessnet.ru:7070";
