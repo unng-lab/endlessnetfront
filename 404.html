@@ -32,7 +32,7 @@
         <a href="#scenarios">Сценарии</a>
         <a href="#platform">Платформа</a>
         <a href="docs/">Документация</a>
-        <a class="nav-action" href="/admin/" data-admin-link>Админка</a>
+        <a class="nav-action" href="admin/" data-admin-link>Админка</a>
       </nav>
     </header>
 
@@ -48,7 +48,7 @@
             конфиги, OIDC вход через российский центр авторизации и MCP-интерфейс для операторов.
           </p>
           <div class="hero-actions" aria-label="Основные действия">
-            <a class="button primary" href="/admin/" data-admin-link>Открыть админку</a>
+            <a class="button primary" href="admin/" data-admin-link>Открыть админку</a>
             <a class="button secondary" href="docs/">Читать документацию</a>
           </div>
         </div>
@@ -73,7 +73,7 @@
             <article class="frontend-card">
               <span>02</span>
               <h3>Админка</h3>
-              <p>Защищенная консоль на `/admin/` для control plane и операционных действий.</p>
+              <p>Статическая консоль на GitHub Pages, которая работает с control-plane API.</p>
             </article>
           </div>
         </div>
@@ -130,10 +130,10 @@
             <p class="eyebrow">Платформа</p>
             <h2>Минимальный стек, понятная ответственность</h2>
             <ul class="feature-list">
-              <li><strong>Go server</strong><span>API, сессии, OIDC callback и embedded admin UI.</span></li>
+              <li><strong>Go server</strong><span>API, сессии и OIDC callback без встроенной статики.</span></li>
               <li><strong>CLI client</strong><span>Логин, регистрация узла и запись WireGuard-конфига.</span></li>
               <li><strong>MCP server</strong><span>Автоматизация сетевых операций через stdio tools.</span></li>
-              <li><strong>Static public</strong><span>Лендинг и документация для Pages или встроенной раздачи.</span></li>
+              <li><strong>Static frontend</strong><span>Лендинг, документация и админка публикуются через Pages.</span></li>
             </ul>
           </div>
         </div>
@@ -167,7 +167,7 @@
       </div>
       <nav aria-label="Ссылки в подвале">
         <a href="docs/">Документация</a>
-        <a href="/admin/" data-admin-link>Админка</a>
+        <a href="admin/" data-admin-link>Админка</a>
         <a href="#product">Фронтенды</a>
       </nav>
     </footer>

@@ -35,7 +35,7 @@
         <a href="../#scenarios">Сценарии</a>
         <a href="../#platform">Платформа</a>
         <a href="./" aria-current="page">Документация</a>
-        <a class="nav-action" href="/admin/" data-admin-link>Админка</a>
+        <a class="nav-action" href="../admin/" data-admin-link>Админка</a>
       </nav>
     </header>
 
@@ -54,8 +54,8 @@
           <p class="eyebrow">Документация</p>
           <h1>EndlessNet: запуск и эксплуатация</h1>
           <p>
-            Эта страница фиксирует текущий публичный quick start. Админка живет отдельно на
-            `/admin/`, а публичный сайт и документация могут публиковаться на GitHub Pages.
+            Эта страница фиксирует текущий публичный quick start. Лендинг, документация и
+            админка публикуются как статика на GitHub Pages; Go server остается API/auth only.
           </p>
         </header>
 
@@ -73,7 +73,7 @@
             </div>
             <div>
               <strong>Admin frontend</strong>
-              <span>Операционная консоль на `/admin/` с server-side session cookie и выбором OAuth-провайдера.</span>
+              <span>Операционная консоль на `/admin/`, которая хранит session token в браузере и вызывает API.</span>
             </div>
           </div>
         </section>
@@ -85,9 +85,9 @@
 go run ./cmd/endlessnet-server --config server.json</code></pre>
           <p>После запуска доступны:</p>
           <ul>
-            <li>`/` - публичный сайт;</li>
-            <li>`/docs/` - документация;</li>
-            <li>`/admin/` - закрытая админка control plane;</li>
+            <li>`/` - редирект на `site_url`;</li>
+            <li>`/docs/` - редирект на `site_url/docs/`;</li>
+            <li>`/admin/` - редирект на `admin_url`;</li>
             <li>`/auth/login` - страница выбора OAuth/OIDC-провайдера;</li>
             <li>`/api/v1/*` - JSON API для CLI, админки и MCP.</li>
           </ul>
@@ -119,7 +119,7 @@ go run ./cmd/endlessnet-mcp</code></pre>
 
         <section id="pages" class="doc-section">
           <h2>GitHub Pages</h2>
-          <p>Pages build теперь публикует публичный frontend, а не админку.</p>
+          <p>Pages build публикует публичный frontend и админку.</p>
           <pre><code>.\scripts\publish-pages.ps1 `
   -RepoUrl https://github.com/&lt;owner&gt;/&lt;pages-repo&gt;.git `
   -Path pages `
@@ -146,7 +146,7 @@ go run ./cmd/endlessnet-mcp</code></pre>
       </div>
       <nav aria-label="Ссылки в подвале">
         <a href="../">Главная</a>
-        <a href="/admin/" data-admin-link>Админка</a>
+        <a href="../admin/" data-admin-link>Админка</a>
       </nav>
     </footer>
   </body>

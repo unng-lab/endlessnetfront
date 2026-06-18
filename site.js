@@ -12,7 +12,7 @@
   const apiBase = resolveAPIBase();
   const siteRoot = new URL(window.ENDLESSNET_SITE_ROOT || "./", window.location.href);
   const installURL = new URL("install.sh", siteRoot).href;
-  const adminURL = new URL("/admin/", apiBase).href;
+  const adminURL = new URL(window.ENDLESSNET_ADMIN_URL || "admin/", siteRoot).href;
   const installCommand = [
     `curl -fsSL ${installURL} | ENDLESSNET_SERVER_URL="${apiBase}" ENDLESSNET_AUTH_TOKEN="<token>" ENDLESSNET_NETWORK="<network>" sh`,
     "",
