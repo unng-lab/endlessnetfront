@@ -62,14 +62,19 @@ button {
 }
 
 .brand-mark {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  background: var(--dark);
-  color: #ffffff;
-  display: grid;
-  place-items: center;
-  font-size: 13px;
+  width: 66px;
+  height: 30px;
+  border-radius: 0;
+  background: transparent;
+  display: block;
+  overflow: hidden;
+}
+
+.brand-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .site-nav {
