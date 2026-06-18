@@ -6,7 +6,7 @@
     <title>Документация EndlessNet</title>
     <meta
       name="description"
-      content="Документация EndlessNet: запуск сервера, вход, CLI, MCP, GitHub Pages и production OIDC."
+      content="Справка EndlessNet: админка, подключение устройств, публикация статики и безопасность."
     />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="../favicon.ico" sizes="any" />
@@ -42,10 +42,9 @@
     <main class="docs-page">
       <aside class="docs-nav" aria-label="Оглавление">
         <a href="#overview">Обзор</a>
-        <a href="#server">Сервер</a>
-        <a href="#client">Клиент</a>
-        <a href="#mcp">MCP</a>
-        <a href="#pages">Pages</a>
+        <a href="#admin">Админка</a>
+        <a href="#connect">Подключение</a>
+        <a href="#publish">Публикация</a>
         <a href="#security">Безопасность</a>
       </aside>
 
@@ -54,86 +53,78 @@
           <p class="eyebrow">Документация</p>
           <h1>EndlessNet: запуск и эксплуатация</h1>
           <p>
-            Эта страница фиксирует текущий публичный quick start. Лендинг, документация и
-            админка публикуются как статика на GitHub Pages; Go server остается API/auth only.
+            Эта страница описывает пользовательский порядок работы: вход в админку,
+            управление сетями, подключение устройств и публикацию публичной части.
           </p>
         </header>
 
         <section id="overview" class="doc-section">
           <h2>Обзор</h2>
           <p>
-            EndlessNet - Go-прототип control plane для приватных WireGuard-style сетей. Сервер
-            хранит сети, узлы, пользователей и сессии; клиент генерирует ключи и регистрирует
-            машину; MCP server открывает выбранные API-действия для автоматизации.
+            EndlessNet помогает командам держать частные сети и подключённые устройства
+            под управлением в одном месте. Публичная часть объясняет продукт, а админка
+            используется для ежедневной работы.
           </p>
           <div class="doc-grid">
             <div>
-              <strong>Публичный frontend</strong>
-              <span>Лендинг, документация, APT-инструкции, install.sh и Pages build.</span>
+              <strong>Публичная часть</strong>
+              <span>Лендинг, справка и ссылка на вход в рабочий раздел.</span>
             </div>
             <div>
-              <strong>Admin frontend</strong>
-              <span>Операционная консоль на `/admin/`, которая хранит session token в браузере и вызывает API.</span>
+              <strong>Админка</strong>
+              <span>Сети, устройства, статусы, подключение и выход из аккаунта.</span>
             </div>
           </div>
         </section>
 
-        <section id="server" class="doc-section">
-          <h2>Сервер</h2>
-          <p>Скопируйте пример конфига, настройте `auth.providers[]` и запустите coordination API.</p>
-          <pre><code>Copy-Item configs\server.example.json server.json
-go run ./cmd/endlessnet-server --config server.json</code></pre>
-          <p>После запуска доступны:</p>
+        <section id="admin" class="doc-section">
+          <h2>Админка</h2>
+          <p>Если вход не выполнен, админка открывает страницу входа. После входа доступны:</p>
           <ul>
-            <li>`/` - редирект на `site_url`;</li>
-            <li>`/docs/` - редирект на `site_url/docs/`;</li>
-            <li>`/admin/` - редирект на `admin_url`;</li>
-            <li>`/auth/login` - страница выбора OAuth/OIDC-провайдера;</li>
-            <li>`/api/v1/*` - JSON API для CLI, админки и MCP.</li>
+            <li>обзор состояния сетей и устройств;</li>
+            <li>создание и просмотр сетей;</li>
+            <li>список подключённых устройств;</li>
+            <li>готовые действия для установки клиента и подключения машины.</li>
           </ul>
         </section>
 
-        <section id="client" class="doc-section">
-          <h2>Клиент</h2>
-          <p>Для локальной разработки можно включить `auth.insecure_dev_bypass` и получить dev token.</p>
-          <pre><code>go run ./cmd/endlessnet-client login --server http://localhost:8080 --dev
-go run ./cmd/endlessnet-client network create --name office --cidr 100.64.0.0/24 --dns 100.64.0.1
-go run ./cmd/endlessnet-client up --network office --hostname my-laptop --output .\wg-endlessnet.conf</code></pre>
-          <div class="command-panel compact">
-            <div class="command-header">
-              <span>APT + client setup</span>
-              <button class="copy-button" type="button" data-copy-target="installCommand">Копировать</button>
+        <section id="connect" class="doc-section">
+          <h2>Подключение устройства</h2>
+          <p>Подключение выполняется из админки для выбранной сети.</p>
+          <div class="doc-grid">
+            <div>
+              <strong>1. Выберите сеть</strong>
+              <span>Откройте раздел сетей или устройств и выберите нужное рабочее окружение.</span>
             </div>
-            <pre id="installCommand" data-install-command></pre>
+            <div>
+              <strong>2. Установите клиент</strong>
+              <span>Используйте готовую команду установки из раздела “Доступ”.</span>
+            </div>
+            <div>
+              <strong>3. Подключите устройство</strong>
+              <span>Выполните команду подключения и проверьте появление устройства в списке.</span>
+            </div>
+            <div>
+              <strong>4. Проверьте статус</strong>
+              <span>В админке видно имя устройства, адрес в сети, теги и время последней активности.</span>
+            </div>
           </div>
         </section>
 
-        <section id="mcp" class="doc-section">
-          <h2>MCP</h2>
-          <p>Запускайте MCP server с тем же URL и session token, который используется клиентом.</p>
-          <pre><code>$env:ENDLESSNET_SERVER_URL = "http://localhost:8080"
-$env:ENDLESSNET_TOKEN = "&lt;token&gt;"
-go run ./cmd/endlessnet-mcp</code></pre>
-          <p>Доступные инструменты: `endlessnet_networks_list`, `endlessnet_network_create`, `endlessnet_nodes_list`.</p>
-        </section>
-
-        <section id="pages" class="doc-section">
+        <section id="publish" class="doc-section">
           <h2>GitHub Pages</h2>
-          <p>Pages build публикует публичный frontend и админку.</p>
-          <pre><code>.\scripts\publish-pages.ps1 `
-  -RepoUrl https://github.com/&lt;owner&gt;/&lt;pages-repo&gt;.git `
-  -Path pages `
-  -Branch main `
-  -ApiBaseUrl https://api.example.ru</code></pre>
-          <p>Для Pages добавьте origin публичного сайта в `cors_allowed_origins` backend-конфига.</p>
+          <p>
+            Публичный сайт, справка и админка публикуются только как статические файлы
+            на GitHub Pages. Сервер приложений не должен раздавать эту статику.
+          </p>
         </section>
 
         <section id="security" class="doc-section">
           <h2>Безопасность</h2>
           <ul>
-            <li>`auth.insecure_dev_bypass` предназначен только для локальной разработки.</li>
-            <li>Не логируйте session tokens, OIDC tokens, client secrets и WireGuard private keys.</li>
-            <li>Production authorization должен идти через `auth.providers[]` и российские OIDC/OAuth2-compatible authorization centers.</li>
+            <li>Не публикуйте секреты доступа, приватные ключи и служебные параметры.</li>
+            <li>Не добавляйте на публичные страницы временные или локальные способы входа.</li>
+            <li>Все изменения публичной части должны проходить через сборку и публикацию Pages.</li>
           </ul>
         </section>
       </article>
@@ -142,7 +133,7 @@ go run ./cmd/endlessnet-mcp</code></pre>
     <footer class="site-footer">
       <div>
         <strong>EndlessNet</strong>
-        <span>Документация и публичный frontend.</span>
+        <span>Справка и публичная часть.</span>
       </div>
       <nav aria-label="Ссылки в подвале">
         <a href="../">Главная</a>

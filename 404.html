@@ -6,7 +6,7 @@
     <title>EndlessNet - частные сети для команд и инфраструктуры</title>
     <meta
       name="description"
-      content="EndlessNet - прототип control plane для частных WireGuard-style сетей, админки, CLI и MCP автоматизации."
+      content="EndlessNet помогает командам управлять частными сетями, устройствами и доступом через понятную веб-консоль."
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="favicon.ico" sizes="any" />
@@ -41,11 +41,11 @@
         <canvas id="networkCanvas" class="hero-canvas" aria-hidden="true"></canvas>
         <div class="hero-shade"></div>
         <div class="hero-content">
-          <p class="eyebrow">Маркетинговый сайт</p>
+          <p class="eyebrow">Частные сети</p>
           <h1>EndlessNet</h1>
           <p class="hero-copy">
-            Частная сетка для команд, узлов и автоматизации: Go control plane, WireGuard-style
-            конфиги, OIDC вход через российский центр авторизации и MCP-интерфейс для операторов.
+            Управляйте сетями, подключайте устройства и выдавайте доступ к внутренним ресурсам
+            из одной веб-консоли.
           </p>
           <div class="hero-actions" aria-label="Основные действия">
             <a class="button primary" href="admin/" data-admin-link>Открыть админку</a>
@@ -57,23 +57,23 @@
       <section class="signal-band" id="product">
         <div class="section-inner split-layout">
           <div>
-            <p class="eyebrow">Не только console UI</p>
-            <h2>Два фронтенда с разными задачами</h2>
+            <p class="eyebrow">Разделы продукта</p>
+            <h2>Публичная часть и рабочая админка</h2>
             <p>
-              Публичный сайт объясняет продукт, сценарии внедрения и быстрый старт. Админка
-              остается рабочим интерфейсом для сетей, узлов, токенов и команд установки.
+              Публичный сайт показывает возможности продукта. Админка остается рабочим
+              интерфейсом для сетей, устройств и доступа.
             </p>
           </div>
           <div class="frontend-grid" aria-label="Разделение фронтендов">
             <article class="frontend-card">
               <span>01</span>
               <h3>Публичный сайт</h3>
-              <p>Лендинг, продуктовые блоки, документация и команды установки для GitHub Pages.</p>
+              <p>Описание продукта, сценарии внедрения и справочные материалы.</p>
             </article>
             <article class="frontend-card">
               <span>02</span>
               <h3>Админка</h3>
-              <p>Статическая консоль на GitHub Pages, которая работает с control-plane API.</p>
+              <p>Рабочий кабинет для сетей, устройств, статусов и подключения.</p>
             </article>
           </div>
         </div>
@@ -88,15 +88,15 @@
           <div class="scenario-grid">
             <article class="scenario">
               <h3>Частные сети для команд</h3>
-              <p>Создание сетей, назначение CIDR, DNS и регистрация рабочих машин через CLI.</p>
+              <p>Создание сетей, настройка адресов и подключение рабочих устройств.</p>
             </article>
             <article class="scenario">
               <h3>Доступ к инфраструктуре</h3>
-              <p>OIDC-сессии, пользовательские узлы и конфиги WireGuard без ручной раздачи ключей.</p>
+              <p>Единый вход, пользовательские устройства и понятное управление доступом.</p>
             </article>
             <article class="scenario">
-              <h3>Автоматизация через MCP</h3>
-              <p>Операции со списками сетей и узлов доступны агентам через stdio MCP server.</p>
+              <h3>Автоматизация операций</h3>
+              <p>Повторяющиеся действия можно выполнять без ручной работы в интерфейсе.</p>
             </article>
           </div>
         </div>
@@ -118,22 +118,22 @@
                 <span></span>
               </div>
               <div class="preview-map">
-                <div class="hub">Control Plane</div>
-                <div class="node node-a">CLI</div>
-                <div class="node node-b">MCP</div>
-                <div class="node node-c">OIDC</div>
-                <div class="node node-d">WG</div>
+                <div class="hub">Сервер</div>
+                <div class="node node-a">Клиент</div>
+                <div class="node node-b">Задачи</div>
+                <div class="node node-c">Вход</div>
+                <div class="node node-d">Сеть</div>
               </div>
             </div>
           </div>
           <div class="platform-copy">
             <p class="eyebrow">Платформа</p>
-            <h2>Минимальный стек, понятная ответственность</h2>
+            <h2>Понятные роли в одной системе</h2>
             <ul class="feature-list">
-              <li><strong>Go server</strong><span>API, сессии и OIDC callback без встроенной статики.</span></li>
-              <li><strong>CLI client</strong><span>Логин, регистрация узла и запись WireGuard-конфига.</span></li>
-              <li><strong>MCP server</strong><span>Автоматизация сетевых операций через stdio tools.</span></li>
-              <li><strong>Static frontend</strong><span>Лендинг, документация и админка публикуются через Pages.</span></li>
+              <li><strong>Сервер</strong><span>Хранит сети, устройства, пользователей и статусы.</span></li>
+              <li><strong>Клиент</strong><span>Подключает рабочие машины к выбранной сети.</span></li>
+              <li><strong>Автоматизация</strong><span>Помогает выполнять повторяющиеся сетевые операции.</span></li>
+              <li><strong>Веб-интерфейс</strong><span>Публичный сайт и админка публикуются через Pages.</span></li>
             </ul>
           </div>
         </div>
@@ -143,18 +143,16 @@
         <div class="section-inner docs-layout">
           <div>
             <p class="eyebrow">Быстрый старт</p>
-            <h2>Установить клиент</h2>
+            <h2>Начать подключение</h2>
             <p>
-              Команда ниже подключает UNNG APT-репозиторий, ставит `endlessnet-client`
-              и настраивает клиент для текущего backend API. `install.sh` оставлен как fallback.
+              Откройте админку, выберите сеть и используйте готовые действия для подключения
+              устройства. Технические параметры не выводятся на публичной странице.
             </p>
           </div>
-          <div class="command-panel">
-            <div class="command-header">
-              <span>APT + client setup</span>
-              <button class="copy-button" type="button" data-copy-target="installCommand">Копировать</button>
-            </div>
-            <pre id="installCommand" data-install-command></pre>
+          <div class="quickstart-card">
+            <h3>Админка</h3>
+            <p>Управление сетями, устройствами и доступом в защищённом рабочем разделе.</p>
+            <a class="button primary" href="admin/" data-admin-link>Открыть админку</a>
           </div>
         </div>
       </section>
@@ -163,12 +161,12 @@
     <footer class="site-footer">
       <div>
         <strong>EndlessNet</strong>
-        <span>Control-plane prototype for private networks.</span>
+        <span>Частные сети для команд и инфраструктуры.</span>
       </div>
       <nav aria-label="Ссылки в подвале">
         <a href="docs/">Документация</a>
         <a href="admin/" data-admin-link>Админка</a>
-        <a href="#product">Фронтенды</a>
+        <a href="#product">Разделы</a>
       </nav>
     </footer>
   </body>

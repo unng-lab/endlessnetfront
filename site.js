@@ -9,28 +9,8 @@
     });
   }
 
-  const apiBase = resolveAPIBase();
   const siteRoot = new URL(window.ENDLESSNET_SITE_ROOT || "./", window.location.href);
-  const installURL = new URL("install.sh", siteRoot).href;
   const adminURL = new URL(window.ENDLESSNET_ADMIN_URL || "admin/", siteRoot).href;
-  const installCommand = [
-    "sudo install -d -m 0755 /etc/apt/keyrings",
-    "curl -fsSL https://apt.unng.ru/apt/unng.gpg | sudo tee /etc/apt/keyrings/unng.gpg >/dev/null",
-    'echo "deb [signed-by=/etc/apt/keyrings/unng.gpg] https://apt.unng.ru/apt stable main" | sudo tee /etc/apt/sources.list.d/unng.list',
-    "sudo apt update",
-    "sudo apt install endlessnet-client",
-    `endlessnet-client login --server "${apiBase}" --token "<token>"`,
-    'endlessnet-client up --network "<network>" --hostname "$(hostname)" --output ./wg-endlessnet.conf',
-    "",
-    "# Alternative without APT:",
-    `curl -fsSL ${installURL} | ENDLESSNET_SERVER_URL="${apiBase}" ENDLESSNET_AUTH_TOKEN="<token>" ENDLESSNET_NETWORK="<network>" sh`,
-    "# ENDLESSNET_RELEASE_BASE_URL=https://github.com/<owner>/<repo>/releases/latest/download",
-    "# ENDLESSNET_GO_PACKAGE=github.com/<owner>/<repo>/cmd/endlessnet-client@latest",
-  ].join("\n");
-
-  document.querySelectorAll("[data-install-command]").forEach((element) => {
-    element.textContent = installCommand;
-  });
 
   document.querySelectorAll("[data-admin-link]").forEach((element) => {
     element.setAttribute("href", adminURL);
@@ -59,17 +39,6 @@
 
   drawNetworkCanvas();
   window.addEventListener("resize", drawNetworkCanvas);
-
-  function resolveAPIBase() {
-    const configured = String(window.ENDLESSNET_API_BASE || "").trim().replace(/\/+$/, "");
-    if (configured) {
-      return configured;
-    }
-    if (window.location.protocol === "file:" || window.location.hostname.endsWith("github.io")) {
-      return "http://localhost:8080";
-    }
-    return window.location.origin;
-  }
 
   function drawNetworkCanvas() {
     const canvas = document.querySelector("#networkCanvas");

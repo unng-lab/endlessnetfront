@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="EndlessNet admin login">
-  <title>EndlessNet Admin Login</title>
+  <meta name="description" content="Вход в админку EndlessNet">
+  <title>Вход в админку EndlessNet</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -73,11 +73,11 @@
       color: var(--muted);
       line-height: 1.5;
     }
-    .providers {
+    .login-options {
       display: grid;
       gap: 10px;
     }
-    a.provider {
+    a.login-option {
       min-height: 44px;
       border-radius: 8px;
       background: var(--green);
@@ -89,7 +89,7 @@
       font-weight: 700;
       padding: 0 16px;
     }
-    a.provider:hover { background: var(--green-dark); }
+    a.login-option:hover { background: var(--green-dark); }
     .loading,
     .empty {
       min-height: 44px;
@@ -115,13 +115,13 @@
         <img src="assets/assets/brand-mark.png" alt="">
         <div>
           <strong>EndlessNet</strong>
-          <span>Admin Console</span>
+          <span>Админка</span>
         </div>
       </div>
       <h1>Вход в админку</h1>
-      <p>Выберите доступный провайдер авторизации.</p>
-      <div class="providers" id="providers">
-        <div class="loading">Загрузка провайдеров...</div>
+      <p>Выберите способ входа.</p>
+      <div class="login-options" id="loginOptions">
+        <div class="loading">Загрузка способов входа...</div>
       </div>
       <div class="error" id="errorBox"></div>
     </section>
@@ -142,22 +142,22 @@
       }
       var configured = String(window.ENDLESSNET_API_BASE || "").trim().replace(/\/+$/, "");
       var apiBase = configured || location.origin.replace(/\/+$/, "");
-      var providersEl = document.getElementById("providers");
+      var optionsEl = document.getElementById("loginOptions");
       var errorBox = document.getElementById("errorBox");
 
       function showError(message) {
-        providersEl.innerHTML = "";
+        optionsEl.innerHTML = "";
         errorBox.textContent = message;
         errorBox.style.display = "block";
       }
 
-      function renderProviders(providers) {
-        providersEl.innerHTML = "";
+      function renderLoginOptions(providers) {
+        optionsEl.innerHTML = "";
         if (!providers.length) {
           var empty = document.createElement("div");
           empty.className = "empty";
-          empty.textContent = "Провайдеры авторизации не настроены.";
-          providersEl.appendChild(empty);
+          empty.textContent = "Способы входа не настроены.";
+          optionsEl.appendChild(empty);
           return;
         }
         providers.forEach(function (provider) {
@@ -168,13 +168,13 @@
             return;
           }
           var link = document.createElement("a");
-          link.className = "provider";
+          link.className = "login-option";
           link.href = new URL(loginURL, apiBase).href;
           link.textContent = name;
-          providersEl.appendChild(link);
+          optionsEl.appendChild(link);
         });
-        if (!providersEl.children.length) {
-          showError("Backend вернул некорректный список провайдеров.");
+        if (!optionsEl.children.length) {
+          showError("Не удалось подготовить список входа.");
         }
       }
 
@@ -208,7 +208,7 @@
             return response.text();
           })
           .then(function (html) {
-            renderProviders(parseProvidersFromLoginHTML(html));
+            renderLoginOptions(parseProvidersFromLoginHTML(html));
           });
       }
 
@@ -222,16 +222,16 @@
             return response.json();
           })
           .then(function (payload) {
-            renderProviders(Array.isArray(payload.providers) ? payload.providers : []);
+            renderLoginOptions(Array.isArray(payload.providers) ? payload.providers : []);
           })
           .catch(function (error) {
             loadProvidersFromLoginPage().catch(function () {
-              showError("Не удалось загрузить провайдеров авторизации: " + error.message);
+              showError("Не удалось загрузить способы входа.");
             });
           });
       } catch (error) {
         var box = document.getElementById("errorBox");
-        box.textContent = "Некорректная конфигурация API: " + error.message;
+        box.textContent = "Не удалось открыть вход.";
         box.style.display = "block";
       }
     })();
