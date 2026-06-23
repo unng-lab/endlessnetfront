@@ -9,6 +9,25 @@
     });
   }
 
+  const menuButton = document.querySelector(".menu-button");
+  const mobileNavigation = document.querySelector("#mobile-navigation");
+  if (menuButton && mobileNavigation) {
+    menuButton.addEventListener("click", () => {
+      const expanded = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!expanded));
+      menuButton.setAttribute("aria-label", expanded ? "Открыть меню" : "Закрыть меню");
+      mobileNavigation.classList.toggle("is-open", !expanded);
+    });
+
+    mobileNavigation.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Открыть меню");
+        mobileNavigation.classList.remove("is-open");
+      });
+    });
+  }
+
   const siteRoot = new URL(window.ENDLESSNET_SITE_ROOT || "./", window.location.href);
   const adminURL = new URL(window.ENDLESSNET_ADMIN_URL || "admin/", siteRoot).href;
 

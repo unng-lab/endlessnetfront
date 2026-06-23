@@ -1,173 +1,377 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>EndlessNet - частные сети для команд и инфраструктуры</title>
-    <meta
-      name="description"
-      content="EndlessNet помогает командам управлять частными сетями, устройствами и доступом через понятную веб-консоль."
-    />
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="favicon.ico" sizes="any" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="manifest" href="site.webmanifest" />
-    <link rel="stylesheet" href="site.css" />
-    <script src="config.js"></script>
-    <script src="site.js" defer></script>
-  </head>
-  <body data-page="home">
-    <header class="site-header">
-      <a class="brand" href="./" aria-label="EndlessNet">
-        <span class="brand-mark"><img src="brand-mark.svg" alt="" /></span>
-        <span>EndlessNet</span>
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav class="site-nav" id="siteNav" aria-label="Основная навигация">
-        <a href="#product">Продукт</a>
-        <a href="#scenarios">Сценарии</a>
-        <a href="#platform">Платформа</a>
-        <a href="docs/">Документация</a>
-        <a class="nav-action" href="admin/" data-admin-link>Админка</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EndlessNet — приватная сеть для команды и инфраструктуры</title>
+  <meta name="description" content="EndlessNet объединяет сотрудников, серверы, CI/CD и удалённые устройства в приватную сеть с управлением доступом из одной админки." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="site.css" />
+  <link rel="stylesheet" href="home.css" />
+  <script src="config.js"></script>
+  <script src="site.js" defer></script>
+</head>
+<body data-page="home">
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a class="brand" href="./" aria-label="EndlessNet — главная">
+          <span class="logo-shell">
+            <img class="logo-img" src="brand-logo.svg" alt="EndlessNet" onerror="this.classList.add('is-error')" />
+            <span class="logo-fallback" aria-hidden="true">EndlessNet</span>
+          </span>
+        </a>
 
-    <main>
-      <section class="hero" aria-label="Маркетинговый сайт EndlessNet">
-        <canvas id="networkCanvas" class="hero-canvas" aria-hidden="true"></canvas>
-        <div class="hero-shade"></div>
-        <div class="hero-content">
-          <p class="eyebrow">Частные сети</p>
-          <h1>EndlessNet</h1>
-          <p class="hero-copy">
-            Управляйте сетями, подключайте устройства и выдавайте доступ к внутренним ресурсам
-            из одной веб-консоли.
-          </p>
-          <div class="hero-actions" aria-label="Основные действия">
-            <a class="button primary" href="admin/" data-admin-link>Открыть админку</a>
-            <a class="button secondary" href="docs/">Читать документацию</a>
-          </div>
+        <nav class="desktop-nav" aria-label="Основная навигация">
+          <a href="#capabilities">Возможности</a>
+          <a href="#how">Как работает</a>
+          <a href="#cases">Сценарии</a>
+          <a href="#security">Безопасность</a>
+          <a href="docs/">Документация</a>
+        </nav>
+
+        <div class="header-actions">
+          <a class="button primary" href="admin/" data-admin-link>Открыть админку</a>
+          <button class="menu-button" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-navigation">
+            <span></span>
+          </button>
         </div>
-      </section>
-
-      <section class="signal-band" id="product">
-        <div class="section-inner split-layout">
-          <div>
-            <p class="eyebrow">Разделы продукта</p>
-            <h2>Публичная часть и рабочая админка</h2>
-            <p>
-              Публичный сайт показывает возможности продукта. Админка остается рабочим
-              интерфейсом для сетей, устройств и доступа.
-            </p>
-          </div>
-          <div class="frontend-grid" aria-label="Разделение фронтендов">
-            <article class="frontend-card">
-              <span>01</span>
-              <h3>Публичный сайт</h3>
-              <p>Описание продукта, сценарии внедрения и справочные материалы.</p>
-            </article>
-            <article class="frontend-card">
-              <span>02</span>
-              <h3>Админка</h3>
-              <p>Рабочий кабинет для сетей, устройств, статусов и подключения.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="scenarios">
-        <div class="section-inner">
-          <div class="section-heading">
-            <p class="eyebrow">Сценарии</p>
-            <h2>Где EndlessNet полезен</h2>
-          </div>
-          <div class="scenario-grid">
-            <article class="scenario">
-              <h3>Частные сети для команд</h3>
-              <p>Создание сетей, настройка адресов и подключение рабочих устройств.</p>
-            </article>
-            <article class="scenario">
-              <h3>Доступ к инфраструктуре</h3>
-              <p>Единый вход, пользовательские устройства и понятное управление доступом.</p>
-            </article>
-            <article class="scenario">
-              <h3>Автоматизация операций</h3>
-              <p>Повторяющиеся действия можно выполнять без ручной работы в интерфейсе.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section alt" id="platform">
-        <div class="section-inner platform-layout">
-          <div class="product-preview" aria-label="Схема платформы EndlessNet">
-            <div class="preview-topbar">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="preview-body">
-              <div class="preview-sidebar">
-                <span class="active"></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <div class="preview-map">
-                <div class="hub">Сервер</div>
-                <div class="node node-a">Клиент</div>
-                <div class="node node-b">Задачи</div>
-                <div class="node node-c">Вход</div>
-                <div class="node node-d">Сеть</div>
-              </div>
-            </div>
-          </div>
-          <div class="platform-copy">
-            <p class="eyebrow">Платформа</p>
-            <h2>Понятные роли в одной системе</h2>
-            <ul class="feature-list">
-              <li><strong>Сервер</strong><span>Хранит сети, устройства, пользователей и статусы.</span></li>
-              <li><strong>Клиент</strong><span>Подключает рабочие машины к выбранной сети.</span></li>
-              <li><strong>Автоматизация</strong><span>Помогает выполнять повторяющиеся сетевые операции.</span></li>
-              <li><strong>Веб-интерфейс</strong><span>Публичный сайт и админка публикуются через Pages.</span></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section docs-callout" id="quickstart">
-        <div class="section-inner docs-layout">
-          <div>
-            <p class="eyebrow">Быстрый старт</p>
-            <h2>Начать подключение</h2>
-            <p>
-              Откройте админку, выберите сеть и используйте готовые действия для подключения
-              устройства. Технические параметры не выводятся на публичной странице.
-            </p>
-          </div>
-          <div class="quickstart-card">
-            <h3>Админка</h3>
-            <p>Управление сетями, устройствами и доступом в защищённом рабочем разделе.</p>
-            <a class="button primary" href="admin/" data-admin-link>Открыть админку</a>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div>
-        <strong>EndlessNet</strong>
-        <span>Частные сети для команд и инфраструктуры.</span>
       </div>
-      <nav aria-label="Ссылки в подвале">
+
+      <nav class="mobile-nav" id="mobile-navigation" aria-label="Мобильная навигация">
+        <a href="#capabilities">Возможности</a>
+        <a href="#how">Как работает</a>
+        <a href="#cases">Сценарии</a>
+        <a href="#security">Безопасность</a>
         <a href="docs/">Документация</a>
         <a href="admin/" data-admin-link>Админка</a>
-        <a href="#product">Разделы</a>
       </nav>
-    </footer>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Приватная сеть для команд и инфраструктуры</div>
+        <h1>Закрытый доступ <span class="title-accent">к вашим ресурсам.</span></h1>
+        <p class="lead">
+          EndlessNet объединяет сотрудников, серверы, CI/CD и удалённые устройства в единую приватную сеть.
+          Управляйте подключениями и доступом из одной админки — без публикации внутренних сервисов в интернет.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button primary" href="admin/" data-admin-link>Открыть админку</a>
+          <a class="button" href="#capabilities">Посмотреть возможности</a>
+        </div>
+      </div>
+
+      <aside class="product-preview" aria-label="Предварительный вид админки EndlessNet">
+        <div class="preview-head">
+          <div class="preview-title">team-core</div>
+          <div class="preview-tabs" aria-hidden="true">
+            <span class="active">Сеть</span>
+            <span>Устройства</span>
+            <span>Доступы</span>
+          </div>
+        </div>
+
+        <div class="network-map">
+          <svg viewBox="0 0 500 320" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="route-gradient" x1="0" x2="1">
+                <stop offset="0%" stop-color="#4d8cff" />
+                <stop offset="50%" stop-color="#35d5ff" />
+                <stop offset="100%" stop-color="#63e5ae" />
+              </linearGradient>
+            </defs>
+            <path d="M70 82 C142 22 215 68 250 160 C291 265 365 271 430 82"
+                  fill="none" stroke="url(#route-gradient)" stroke-width="3" stroke-linecap="round" />
+            <path d="M70 82 C143 220 210 242 250 160 C294 72 362 26 430 82"
+                  fill="none" stroke="rgba(255,255,255,.38)" stroke-width="2"
+                  stroke-linecap="round" stroke-dasharray="10 13" />
+          </svg>
+
+          <div class="node node-a">LAPTOP</div>
+          <div class="node node-b">SERVER</div>
+          <div class="node node-c">CI/CD</div>
+          <div class="node node-d">EDGE</div>
+          <div class="node center">
+            <img class="center-logo" src="brand-mark.svg" alt="" onerror="this.classList.add('is-error')" />
+            <span class="center-fallback" aria-hidden="true">EndlessNet</span>
+          </div>
+        </div>
+
+        <div class="device-list">
+          <div class="device-row">
+            <div class="device-icon">01</div>
+            <div>
+              <strong>dev-laptop</strong>
+              <small>Доступ: staging, Grafana и внутренние сервисы</small>
+            </div>
+            <span class="status">В сети</span>
+          </div>
+
+          <div class="device-row">
+            <div class="device-icon">02</div>
+            <div>
+              <strong>k8s-staging</strong>
+              <small>Закрытый кластер для группы backend</small>
+            </div>
+            <span class="status">Доступен</span>
+          </div>
+        </div>
+      </aside>
+
+      <div class="hero-proof" aria-label="Ключевые преимущества">
+        <div class="proof-item">
+          <span class="proof-icon">✓</span>
+          <div>
+            <strong>Единая админка</strong>
+            <span>Сети, устройства и доступы на одном экране.</span>
+          </div>
+        </div>
+        <div class="proof-item">
+          <span class="proof-icon">✓</span>
+          <div>
+            <strong>Закрытые сервисы</strong>
+            <span>Не публикуйте внутренние ресурсы в интернет.</span>
+          </div>
+        </div>
+        <div class="proof-item">
+          <span class="proof-icon">✓</span>
+          <div>
+            <strong>Явные правила</strong>
+            <span>Открывайте только необходимые ресурсы.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="resource-strip" id="capabilities" aria-label="Типы подключаемых ресурсов">
+      <div class="container resource-inner">
+        <div class="resource-copy">
+          <strong>Подключайте привычные окружения</strong>
+          <span>Одна модель доступа для пользователей, инфраструктуры и удалённых устройств.</span>
+        </div>
+        <span class="resource-chip">Ноутбуки</span>
+        <span class="resource-chip">Серверы</span>
+        <span class="resource-chip">Kubernetes</span>
+        <span class="resource-chip">CI/CD</span>
+        <span class="resource-chip">Edge</span>
+      </div>
+    </section>
+
+    <section class="container section" id="how">
+      <div class="section-head">
+        <h2>Подключение без сетевой рутины</h2>
+        <p class="section-intro">
+          Создайте сеть, добавьте устройства и выдайте доступ к нужным ресурсам.
+          Дальнейшее управление остаётся в одной админке.
+        </p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <div class="step-number">1</div>
+          <h3>Создайте сеть</h3>
+          <p>Подготовьте приватный контур для команды, проекта или отдельного окружения.</p>
+        </article>
+
+        <article class="step">
+          <div class="step-number">2</div>
+          <h3>Подключите устройства</h3>
+          <p>Добавьте ноутбуки, серверы, пайплайны и удалённые узлы в нужную сеть.</p>
+        </article>
+
+        <article class="step">
+          <div class="step-number">3</div>
+          <h3>Настройте доступ</h3>
+          <p>Определите, кто может обращаться к конкретным сервисам и окружениям.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="use-cases" id="cases">
+      <div class="container section">
+        <div class="section-head">
+          <h2>Три основных сценария</h2>
+          <p class="section-intro">
+            EndlessNet подходит для ежедневной работы команды, доступа к инфраструктуре
+            и подключения автоматизированных или удалённых узлов.
+          </p>
+        </div>
+
+        <div class="case-grid">
+          <article class="case primary-case">
+            <span class="case-label">Команда</span>
+            <div class="case-visual" aria-hidden="true">
+              <span class="mini-node">USER</span>
+              <span class="mini-route"></span>
+              <span class="mini-node">APPS</span>
+            </div>
+            <div>
+              <h3>Сотрудники и подрядчики</h3>
+              <p>Давайте доступ к внутренним приложениям и сервисам без подключения ко всей корпоративной сети.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <span class="case-label">Инфраструктура</span>
+            <div class="case-visual" aria-hidden="true">
+              <span class="mini-node">SSH</span>
+              <span class="mini-route"></span>
+              <span class="mini-node">K8S</span>
+            </div>
+            <div>
+              <h3>Серверы и Kubernetes</h3>
+              <p>Оставляйте SSH, базы данных, monitoring и админ‑панели внутри приватного контура.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <span class="case-label">Автоматизация</span>
+            <div class="case-visual" aria-hidden="true">
+              <span class="mini-node">CI</span>
+              <span class="mini-route"></span>
+              <span class="mini-node">EDGE</span>
+            </div>
+            <div>
+              <h3>CI/CD и удалённые устройства</h3>
+              <p>Подключайте раннеры и узлы за NAT без постоянных публичных endpoint’ов.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section admin-section">
+      <div class="admin-copy">
+        <h2>Вся сеть — на одном экране</h2>
+        <p class="section-intro">
+          Админка показывает устройства, их состояние и выданные доступы.
+          Управляйте сетью без разрозненных конфигураций и ручного учёта.
+        </p>
+
+        <div class="feature-list">
+          <div class="feature">
+            <span class="feature-icon">01</span>
+            <div>
+              <strong>Сети и устройства</strong>
+              <span>Понятная структура подключений и текущие статусы.</span>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">02</span>
+            <div>
+              <strong>Группы и правила</strong>
+              <span>Доступы для команд, проектов и отдельных окружений.</span>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">03</span>
+            <div>
+              <strong>Маршруты и доступность</strong>
+              <span>Видно, какие ресурсы доступны конкретному устройству.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-panel" aria-label="Пример списка устройств в админке">
+        <div class="admin-panel-head">
+          <span class="admin-panel-title">Устройства</span>
+          <span class="admin-panel-meta">4 подключено</span>
+        </div>
+
+        <div class="admin-table">
+          <div class="table-head">
+            <span>Устройство</span>
+            <span>Сеть</span>
+            <span>Статус</span>
+          </div>
+
+          <div class="table-row">
+            <strong>dev-laptop</strong>
+            <span>team-core</span>
+            <span class="state">В сети</span>
+          </div>
+          <div class="table-row">
+            <strong>k8s-staging</strong>
+            <span>platform</span>
+            <span class="state">В сети</span>
+          </div>
+          <div class="table-row">
+            <strong>ci-runner-01</strong>
+            <span>delivery</span>
+            <span class="state">В сети</span>
+          </div>
+          <div class="table-row">
+            <strong>edge-gateway</strong>
+            <span>field</span>
+            <span class="state">В сети</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="security-band" id="security">
+      <div class="container section security-grid">
+        <div class="security-copy">
+          <h2>Меньше открытых портов. Больше контроля.</h2>
+          <p class="section-intro">
+            Внутренние сервисы остаются закрытыми, а доступ выдаётся только тем пользователям
+            и устройствам, которым он действительно нужен.
+          </p>
+        </div>
+
+        <div class="security-items">
+          <article class="security-item">
+            <span class="security-mark">PRIVATE</span>
+            <strong>Закрытый контур</strong>
+            <p>SSH, базы данных и админ‑панели не требуется публиковать в интернете.</p>
+          </article>
+          <article class="security-item">
+            <span class="security-mark">POLICY</span>
+            <strong>Минимальные права</strong>
+            <p>Правила определяют, кто может обращаться к конкретным ресурсам.</p>
+          </article>
+          <article class="security-item">
+            <span class="security-mark">NAT</span>
+            <strong>Удалённые устройства</strong>
+            <p>Подключайте узлы за NAT и в сетях с динамическими адресами.</p>
+          </article>
+          <article class="security-item">
+            <span class="security-mark">STATUS</span>
+            <strong>Наблюдаемость</strong>
+            <p>Состояние устройств и подключений доступно в админке.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="container cta">
+      <div class="cta-card">
+        <div>
+          <h2>Управляйте приватной сетью из админки.</h2>
+          <p>Создайте сеть, подключите первое устройство и настройте доступ к внутренним ресурсам.</p>
+        </div>
+        <a class="button primary" href="admin/" data-admin-link>Открыть админку</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container site-footer">
+    <span>© EndlessNet. Приватная сеть для команд и инфраструктуры.</span>
+    <nav class="footer-links" aria-label="Ссылки в подвале">
+      <a href="docs/">Документация</a>
+      <a href="admin/" data-admin-link>Админка</a>
+      <a href="#security">Безопасность</a>
+      <a href="#how">Как работает</a>
+    </nav>
+  </footer>
+
   </body>
 </html>
