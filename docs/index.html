@@ -16,6 +16,8 @@
     <meta name="msapplication-TileColor" content="#07111D" />
     <meta name="theme-color" content="#07111D" />
     <link rel="stylesheet" href="../site.css" />
+    <link rel="stylesheet" href="../home.css" />
+    <link rel="stylesheet" href="../docs.css" />
     <script>
       window.ENDLESSNET_SITE_ROOT = "../";
     </script>
@@ -24,23 +26,40 @@
   </head>
   <body data-page="docs">
     <header class="site-header">
-      <a class="brand" href="../" aria-label="EndlessNet">
-        <span class="brand-mark"><img src="../brand-mark.svg" alt="" /></span>
-        <span>EndlessNet</span>
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav class="site-nav" id="siteNav" aria-label="Основная навигация">
-        <a href="../#capabilities">Возможности</a>
-        <a href="../#how">Как работает</a>
-        <a href="../#cases">Сценарии</a>
-        <a href="../#security">Безопасность</a>
-        <a href="./" aria-current="page">Документация</a>
-        <a class="nav-action" href="../admin/" data-admin-link>Админка</a>
-      </nav>
+      <div class="container">
+        <div class="header-inner">
+          <a class="brand" href="../" aria-label="EndlessNet — главная">
+            <span class="logo-shell">
+              <img class="logo-img" src="../brand-logo.svg" alt="EndlessNet" onerror="this.classList.add('is-error')" />
+              <span class="logo-fallback" aria-hidden="true">EndlessNet</span>
+            </span>
+          </a>
+
+          <nav class="desktop-nav" aria-label="Основная навигация">
+            <a href="../#capabilities">Возможности</a>
+            <a href="../#how">Как работает</a>
+            <a href="../#cases">Сценарии</a>
+            <a href="../#security">Безопасность</a>
+            <a href="./" aria-current="page">Документация</a>
+          </nav>
+
+          <div class="header-actions">
+            <a class="button primary" href="../admin/" data-admin-link>Открыть админку</a>
+            <button class="menu-button" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-navigation">
+              <span></span>
+            </button>
+          </div>
+        </div>
+
+        <nav class="mobile-nav" id="mobile-navigation" aria-label="Мобильная навигация">
+          <a href="../#capabilities">Возможности</a>
+          <a href="../#how">Как работает</a>
+          <a href="../#cases">Сценарии</a>
+          <a href="../#security">Безопасность</a>
+          <a href="./" aria-current="page">Документация</a>
+          <a href="../admin/" data-admin-link>Админка</a>
+        </nav>
+      </div>
     </header>
 
     <main class="docs-page">
@@ -134,12 +153,9 @@
       </article>
     </main>
 
-    <footer class="site-footer">
-      <div>
-        <strong>EndlessNet</strong>
-        <span>Справка и публичная часть.</span>
-      </div>
-      <nav aria-label="Ссылки в подвале">
+    <footer class="container site-footer">
+      <span>© EndlessNet. Справка и публичная часть.</span>
+      <nav class="footer-links" aria-label="Ссылки в подвале">
         <a href="../">Главная</a>
         <a href="../admin/" data-admin-link>Админка</a>
       </nav>
