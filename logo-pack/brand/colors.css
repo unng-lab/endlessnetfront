@@ -1,0 +1,12 @@
+:root {
+  --endlessnet-bg-dark: #07111D;
+  --endlessnet-bg-dark-alt: #0B1726;
+  --endlessnet-bg-light: #F7F9FC;
+  --endlessnet-ink: #081321;
+  --endlessnet-white: #F5F8FC;
+  --endlessnet-cyan: #19D8F2;
+  --endlessnet-blue: #128CFF;
+  --endlessnet-indigo: #244BFF;
+  --endlessnet-muted: #8DA0B6;
+  --endlessnet-gradient: linear-gradient(135deg, #19D8F2 0%, #128CFF 52%, #244BFF 100%);
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#07111D"/>
+  <circle cx="1040" cy="70" r="280" fill="#128CFF" opacity="0.06"/>
+  <circle cx="80" cy="600" r="240" fill="#19D8F2" opacity="0.05"/>
+  <image href="../svg/horizontal/endlessnet-horizontal-dark.svg" x="118" y="185" width="964" height="196"/>
+  <text x="600" y="445" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="400" fill="#A9B8C9">Частные сети для команд и инфраструктуры</text>
+</svg>

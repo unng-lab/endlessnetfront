@@ -1,0 +1,16 @@
+{
+  "background_dark": "#07111D",
+  "background_dark_alt": "#0B1726",
+  "background_light": "#F7F9FC",
+  "ink": "#081321",
+  "white": "#F5F8FC",
+  "cyan": "#19D8F2",
+  "blue": "#128CFF",
+  "indigo": "#244BFF",
+  "muted": "#8DA0B6",
+  "gradient": [
+    "#19D8F2",
+    "#128CFF",
+    "#244BFF"
+  ]
+}

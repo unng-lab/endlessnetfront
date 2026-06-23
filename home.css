@@ -90,11 +90,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 7px 12px;
-      background: #fff;
-      border: 1px solid rgba(255,255,255,.9);
-      border-radius: 8px;
-      box-shadow: 0 10px 28px rgba(0,0,0,.20);
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
       overflow: hidden;
     }
 
@@ -427,11 +427,11 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      border-radius: 8px;
-      color: #07101e;
-      background: #fff;
-      border-color: #fff;
-      box-shadow: 0 22px 70px rgba(77,140,255,.28);
+      border-radius: 0;
+      color: var(--text);
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
     }
 
     .node-a { left: 8%; top: 15%; }
@@ -449,7 +449,7 @@
 
     .center-fallback {
       display: none;
-      color: #07101e;
+      color: var(--text);
       font-size: 18px;
       font-weight: 900;
       letter-spacing: 0;
@@ -960,7 +960,7 @@
 
       .header-inner { min-height: 70px; gap: 8px; }
       .brand { min-width: 0; }
-      .logo-shell { width: 122px; height: 40px; padding: 5px 9px; border-radius: 8px; }
+      .logo-shell { width: 122px; height: 40px; padding: 0; border-radius: 0; }
       .logo-fallback { font-size: 17px; }
       .header-actions { gap: 7px; }
       .header-actions .button { display: none; }
@@ -1013,7 +1013,7 @@
       .preview-tabs span:not(.active) { display: none; }
       .network-map { height: 255px; margin: 12px; border-radius: 8px; }
       .node { width: 54px; height: 54px; border-radius: 8px; }
-      .node.center { width: 82px; height: 82px; border-radius: 8px; }
+      .node.center { width: 82px; height: 82px; border-radius: 0; }
       .node-c, .node-d { display: none; }
       .device-list { padding: 0 12px 12px; }
       .device-row { grid-template-columns: 34px 1fr; }
