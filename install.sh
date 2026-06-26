@@ -10,6 +10,10 @@ hostname_value="${ENDLESSNET_HOSTNAME:-$(hostname)}"
 release_base="${ENDLESSNET_RELEASE_BASE_URL:-}"
 download_url="${ENDLESSNET_DOWNLOAD_URL:-}"
 go_package="${ENDLESSNET_GO_PACKAGE:-}"
+apt_repo="${ENDLESSNET_APT_REPO:-https://apt.unng.ru/apt}"
+apt_key_url="${ENDLESSNET_APT_KEY_URL:-https://apt.unng.ru/apt/unng.gpg}"
+apt_keyring="${ENDLESSNET_APT_KEYRING:-/etc/apt/keyrings/unng.gpg}"
+apt_source="${ENDLESSNET_APT_SOURCE_LIST:-/etc/apt/sources.list.d/unng.list}"
 
 os="$(uname -s | tr '[:upper:]' '[:lower:]')"
 arch="$(uname -m)"
@@ -44,6 +48,17 @@ fetch() {
   fi
 }
 
+as_root() {
+  if [ "$(id -u)" = "0" ]; then
+    "$@"
+  elif command -v sudo >/dev/null 2>&1; then
+    sudo "$@"
+  else
+    echo "Root privileges or sudo are required" >&2
+    exit 1
+  fi
+}
+
 install_bin() {
   src="$1"
   mkdir -p "$install_dir" 2>/dev/null || true
@@ -56,6 +71,24 @@ install_bin() {
     exit 1
   fi
 }
+
+install_apt_package() {
+  command -v apt-get >/dev/null 2>&1 || { echo "apt-get is required for APT installs" >&2; exit 1; }
+
+  key_tmp="$tmp/unng.gpg"
+  source_tmp="$tmp/unng.list"
+  fetch "$apt_key_url" "$key_tmp"
+  printf 'deb [signed-by=%s] %s stable main\n' "$apt_keyring" "$apt_repo" > "$source_tmp"
+
+  as_root install -d -m 0755 "$(dirname "$apt_keyring")"
+  as_root install -m 0644 "$key_tmp" "$apt_keyring"
+  as_root install -d -m 0755 "$(dirname "$apt_source")"
+  as_root install -m 0644 "$source_tmp" "$apt_source"
+  as_root apt-get update
+  as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y "$name"
+}
+
+installed_path="$install_dir/$name"
 
 if [ -n "$download_url" ]; then
   archive="$tmp/endlessnet-download"
@@ -81,9 +114,14 @@ elif [ -n "$release_base" ]; then
 elif [ -n "$go_package" ]; then
   command -v go >/dev/null 2>&1 || { echo "go is required for ENDLESSNET_GO_PACKAGE installs" >&2; exit 1; }
   GOBIN="$tmp" go install "$go_package"
+elif [ "$os" = "linux" ] && command -v apt-get >/dev/null 2>&1; then
+  install_apt_package
+  installed_path="$(command -v "$name" || printf '%s' "$name")"
 else
   cat >&2 <<'EOF'
 EndlessNet install source is not configured.
+
+On Debian/Ubuntu, the installer uses the UNNG APT repository by default.
 
 Set one of:
   ENDLESSNET_DOWNLOAD_URL      direct binary or tar.gz URL
@@ -93,12 +131,14 @@ EOF
   exit 1
 fi
 
-chmod +x "$bin"
-install_bin "$bin"
+if [ -f "$bin" ]; then
+  chmod +x "$bin"
+  install_bin "$bin"
+fi
 
 cat <<EOF
 EndlessNet client installed:
-  $install_dir/$name
+  $installed_path
 
 Next:
   $name login --server "${server_url:-<server-url>}" --token "${auth_token:-<token>}"
@@ -106,9 +146,9 @@ Next:
 EOF
 
 if [ "${ENDLESSNET_AUTO_LOGIN:-0}" = "1" ] && [ -n "$server_url" ] && [ -n "$auth_token" ]; then
-  "$install_dir/$name" login --server "$server_url" --token "$auth_token"
+  "$installed_path" login --server "$server_url" --token "$auth_token"
 fi
 
 if [ "${ENDLESSNET_AUTO_UP:-0}" = "1" ] && [ -n "$network" ]; then
-  "$install_dir/$name" up --network "$network" --hostname "$hostname_value" --output ./wg-endlessnet.conf
+  "$installed_path" up --network "$network" --hostname "$hostname_value" --output ./wg-endlessnet.conf
 fi
