@@ -132,6 +132,27 @@
               <span>В админке видно имя устройства, адрес в сети, теги и время последней активности.</span>
             </div>
           </div>
+          <p class="doc-note">
+            В разделе “Доступ” админка показывает команды для основных платформ и честно отделяет готовые пути установки от fallback-вариантов.
+          </p>
+          <div class="doc-grid">
+            <div>
+              <strong>Debian/Ubuntu</strong>
+              <span>Основной путь установки: UNNG APT repository на https://apt.unng.ru/apt.</span>
+            </div>
+            <div>
+              <strong>Linux и macOS</strong>
+              <span>Для Linux без APT и для macOS используйте Pages installer install.sh с явным release, direct download или go install источником.</span>
+            </div>
+            <div>
+              <strong>Windows</strong>
+              <span>Используйте endlessnet-client.exe, затем выполните login, up и при необходимости сгенерируйте Windows service scripts.</span>
+            </div>
+            <div>
+              <strong>Android/iOS</strong>
+              <span>Пока нативный мобильный пакет не опубликован, импортируйте сгенерированный wg-endlessnet.conf в официальное приложение WireGuard.</span>
+            </div>
+          </div>
         </section>
 
         <section id="publish" class="doc-section">

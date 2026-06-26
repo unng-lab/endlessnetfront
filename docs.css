@@ -105,6 +105,10 @@ body[data-page="docs"] .doc-section p {
   margin: 0;
 }
 
+body[data-page="docs"] .doc-section .doc-note {
+  margin-top: 22px;
+}
+
 body[data-page="docs"] .doc-section ul {
   max-width: 780px;
   margin: 16px 0 0;
